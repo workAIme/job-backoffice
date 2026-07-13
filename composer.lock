@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef37d729faaeb4ee50fadad872280c81",
+    "content-hash": "881f7b53c7ce1dc88af07ba6f877b51b",
     "packages": [
         {
             "name": "brick/math",
@@ -1119,23 +1119,22 @@
         },
         {
             "name": "job/shared",
-            "version": "dev-main",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yaya1426/job-shared.git",
-                "reference": "a1469526add0e9aac3a983875b7d60b7d5b89eea"
+                "url": "https://github.com/workAIme/job-shared.git",
+                "reference": "7d7c111f2ab9b25aba89dc5e17bde9f9fdf62fc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yaya1426/job-shared/zipball/a1469526add0e9aac3a983875b7d60b7d5b89eea",
-                "reference": "a1469526add0e9aac3a983875b7d60b7d5b89eea",
+                "url": "https://api.github.com/repos/workAIme/job-shared/zipball/7d7c111f2ab9b25aba89dc5e17bde9f9fdf62fc1",
+                "reference": "7d7c111f2ab9b25aba89dc5e17bde9f9fdf62fc1",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1147,10 +1146,10 @@
             ],
             "description": "This is a shared package to have shared logic of models",
             "support": {
-                "source": "https://github.com/yaya1426/job-shared/tree/main",
-                "issues": "https://github.com/yaya1426/job-shared/issues"
+                "source": "https://github.com/workAIme/job-shared/tree/v1.0.0",
+                "issues": "https://github.com/workAIme/job-shared/issues"
             },
-            "time": "2025-05-19T08:10:04+00:00"
+            "time": "2026-07-13T00:27:54+00:00"
         },
         {
             "name": "laravel/framework",
@@ -9111,5 +9110,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
