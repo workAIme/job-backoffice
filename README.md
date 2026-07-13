@@ -1,66 +1,274 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Job Platform Backoffice
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Admin dashboard for the Job Platform.
 
-## About Laravel
+This repository is responsible for:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Managing administrators, companies, job categories, vacancies, resumes, and job applications.
+- Creating the shared database structure.
+- Running all database migrations and seeders.
+- Providing the admin interface for the platform.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Related Repositories
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Repository | Purpose |
+|---|---|
+| [`job-backoffice`](https://github.com/workAIme/job-backoffice) | Admin dashboard and database setup |
+| [`job-user-app`](https://github.com/workAIme/job-user-app) | Public user application |
+| [`job-shared`](https://github.com/workAIme/job-shared) | Shared Composer package containing common models and logic |
 
-## Learning Laravel
+The backoffice and user application must use the **same database**.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Make sure the following tools are installed:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2 or later
+- Composer
+- MySQL or MariaDB
+- Node.js and npm
+- Git
 
-## Laravel Sponsors
+XAMPP can be used for PHP, MariaDB, and phpMyAdmin.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Installation
 
-### Premium Partners
+### 1. Clone the repository
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+git clone https://github.com/workAIme/job-backoffice.git
+cd job-backoffice
+```
 
-## Contributing
+### 2. Install PHP dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+```
 
-## Code of Conduct
+Composer will automatically install the shared package:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```text
+job/shared ^1.0
+```
 
-## Security Vulnerabilities
+### 3. Create the environment file
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+On Git Bash, macOS, or Linux:
 
-## License
+```bash
+cp .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+On Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+### 4. Generate the application key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Create the database
+
+Create a new MariaDB/MySQL database using phpMyAdmin or the command line.
+
+Recommended database name:
+
+```text
+job_backoffice
+```
+
+Then update the database settings in `.env`:
+
+```env
+DB_CONNECTION=mariadb
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=job_backoffice
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+The `job-user-app` repository must use the same database settings.
+
+## Database Migrations
+
+All project migrations are located in:
+
+```text
+database/migrations
+```
+
+The migrations create the following main tables and supporting tables:
+
+- Users
+- Cache
+- Queue jobs
+- Job categories
+- Companies
+- Resumes
+- Job vacancies
+- Job applications
+- Analytics fields
+
+Run the migrations from this repository only:
+
+```bash
+php artisan migrate
+```
+
+## Seed Demo Data
+
+The main seeder is located at:
+
+```text
+database/seeders/DatabaseSeeder.php
+```
+
+It creates:
+
+- A demo administrator account
+- Job categories
+- Companies and company owners
+- Job vacancies
+- Job seekers
+- Resumes
+- Job applications
+
+The demo data is loaded from:
+
+```text
+database/data/job_data.json
+database/data/job_applications.json
+```
+
+Run migrations and seeders together:
+
+```bash
+php artisan migrate --seed
+```
+
+### Demo Administrator
+
+```text
+Email: admin@admin.com
+Password: 12345678
+```
+
+> Important: These credentials are for local development only. Change the password before using the project in a real environment. Do not run the demo seeder in production.
+
+To rebuild the local database completely:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+> Warning: `migrate:fresh` deletes all existing database tables and data.
+
+## Frontend Assets
+
+Install the frontend dependencies:
+
+```bash
+npm install
+```
+
+Build the assets:
+
+```bash
+npm run build
+```
+
+For frontend development with automatic rebuilding:
+
+```bash
+npm run dev
+```
+
+If PowerShell blocks `npm.ps1`, use:
+
+```powershell
+npm.cmd install
+npm.cmd run build
+```
+
+## Storage Link
+
+Create the public storage link if the project serves uploaded files:
+
+```bash
+php artisan storage:link
+```
+
+## Run the Backoffice
+
+```bash
+php artisan serve --port=8000
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Run the Complete Platform
+
+Run the backoffice first because it creates and seeds the shared database.
+
+Then configure and run `job-user-app` using the same database:
+
+```text
+Backoffice: http://127.0.0.1:8000
+User app:   http://127.0.0.1:8001
+```
+
+## Useful Commands
+
+Clear Laravel caches:
+
+```bash
+php artisan optimize:clear
+```
+
+Check migration status:
+
+```bash
+php artisan migrate:status
+```
+
+Run automated tests:
+
+```bash
+php artisan test
+```
+
+## Environment Notes
+
+The default environment uses database-backed sessions, cache, and queues:
+
+```env
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+```
+
+The required supporting tables are created by this repository's migrations.
+
+AWS settings are only needed when the application is configured to use Amazon S3. The default filesystem is local.
+
+## Security
+
+Never commit these files or values:
+
+- `.env`
+- API keys
+- Database passwords
+- AWS credentials
+- Production secrets
+
+Only `.env.example` should be committed.
